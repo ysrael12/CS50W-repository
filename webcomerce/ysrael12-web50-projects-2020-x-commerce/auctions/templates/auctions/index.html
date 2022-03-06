@@ -1,0 +1,30 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+<br> <br> <br>
+
+   <div class="card text-center">
+  <div class="card-header">
+    Welcome
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">Kangoo-auctions</h5>
+    <p class="card-text">In Active Listings page you can see the products which other users are selling and you can bid your price there</p>
+    <a href="#" class="card-text">You can sell a product by going to the Create Listing page where you can fill all the details so that other users can check it out</a>
+  </div>
+  <div class="card-footer text-muted">
+   {% if user.is_authenticated %}
+            <a href="{% url 'activelisting' %}" class="btn btn-success">Active Listings</a>
+            <a href="{% url 'createlisting' %}" class="btn btn-success">Create Listings</a>
+        {% else %}
+            <a href="{% url 'register' %}" class="btn btn-success">Register</a>
+            <a href="{% url 'login' %}" class="btn btn-success">Login</a>
+        {% endif %}       
+       
+    </div>
+  </div>
+</div>
+
+ 
+{% endblock %}

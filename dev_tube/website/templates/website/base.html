@@ -1,0 +1,80 @@
+{% load static %}
+
+{% block css %}
+
+{% endblock css %}
+
+{% block head %}
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock title %}</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    <link href="https://vjs.zencdn.net/7.17.0/video-js.css" rel="stylesheet" />
+    <link rel="icon" type="image/x-icon" href={% static 'website/icon.gif' %}>
+          
+
+<link href="https://vjs.zencdn.net/7.17.0/video-js.css" rel="stylesheet" />
+<link href = "{% static 'css/style.css' %}" rel="stylesheet" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@1,700&display=swap" rel="stylesheet">
+
+  <style>
+    body{
+      font-family: 'Josefin Sans', sans-serif;
+      background-color: rgb(225, 240, 252);
+    }
+
+  </style>
+
+
+    
+    
+</head>
+{% endblock head %}
+<header>
+<section>
+<p id="logo" target="_blank">DevTube</p>
+
+<label for="toggle-1" class="toggle-menu"><ul><li></li> <li></li> <li></li></ul></label>
+<input type="checkbox" id="toggle-1">
+
+<nav>
+<ul>
+<li><a href='{% url 'videos' %}' ><i class="icon-home"></i>Home</a></li>
+
+{% if user.is_authenticated %}
+<li><a href="{% url 'account_logout' %}"><i class="icon-thumbs-up-alt"></i>Logout</a></li>
+<li><a href="{% url 'upload' %}"><i class="icon-thumbs-up-alt"></i>upload </a></li>
+{% else %} 
+<li><a href="{% url 'account_signup' %} "i class="icon-gear"></i>Register</a></li>
+<li><a href="{% url 'account_login' %}"><i class="icon-picture"></i>Login</a></li>
+{% endif %}
+<li><a href='{% url 'index' %}'i class="icon-picture"></i>About</a></li>
+</ul>
+</nav>
+</header>
+
+{% block body %}
+{% endblock body %}
+
+
+<footer class="footer">
+  <div class="content has-text-centered">
+    <p class= >
+      <strong>Devlandia</strong> by <a href="https://github.com/ysrael12">Ysrael Sacrati</a> final project havard cs50w
+      <a href="https://cs50.harvard.edu/web/2020/"> course link</a>. 
+    </p>
+  </div>
+</footer>
+</body>
+</html>

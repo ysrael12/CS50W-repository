@@ -1,0 +1,251 @@
+{% extends 'videos/base.html' %}
+{% block css %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.6/semantic.css">
+{% endblock css %}
+
+
+{% block title %}{% endblock title %}
+
+{% block body %}
+
+
+
+<!--  VIDEO PLAYER -->
+<center>
+    <video
+    id="my-video"
+    class="video-js"
+    controls
+    preload="auto"
+    width="640"
+    height="400"
+    poster="MY_VIDEO_POSTER.jpg"
+    data-setup="{}"
+  >
+    <source src="{{video.video.url}}" type="video/mp4" />
+   
+    <p class="vjs-no-js">
+      To view this video please enable JavaScript, and consider upgrading to a
+      web browser that
+      <a href="https://videojs.com/html5-video-support/" target="_blank"
+        >supports HTML5 video</a
+      >
+    </p>
+  </video>
+   <script src="https://vjs.zencdn.net/7.17.0/video.min.js"></script>
+  
+  
+  
+  
+<!--  DESCRIPTION -->
+
+
+    <form method="POST">
+      {% csrf_token %}
+
+      <div class="ui labeled button"  tabindex="0" name='likeVideo' onclick="window.location='{% url 'like_video' video.id %}';">
+
+    </form>
+    <div class="ui button">
+      <i class="thumbs up
+   icon"></i> Like
+    </div>
+    <a class="ui basic label">
+      {{video.likes}}
+    </a>
+
+  </div>
+
+
+
+<br>
+
+    <form method="POST">
+      {% csrf_token %}
+
+
+      <div class="ui labeled button" tabindex="0" name='dislikeVideo' onclick="window.location='{% url 'dislike_video' video.id %}';">
+    </form>
+    <div class="ui button">
+      <i class="thumbs down
+   icon"></i> Dislike
+    </div>
+
+
+    <a class="ui basic label">
+      {{video.dislikes}}
+    </a>
+  </div>
+
+
+
+
+<div class="container-2 description ">
+
+  <div class="container-1-box ">
+
+    <h3 class="title is-4"><span style='text-align: left;'> {{video.title}} </span> </h3>
+    <hr style='width:1080px;'>
+    
+
+    </img>
+    <center>
+    <p style='color:purple;' class='creator'><b>by {{video.user.username}}</b></p>
+    </center>
+ 
+</div>
+    <h4 style='color:teal;'><i>{{video.views}} views</i></h4>
+
+    <p>
+      {{video.description}}
+      <!-- Reply -->
+      <div class="ui form">
+        <div class="field">
+        </div>
+
+       <!--  RECOMMENDATIONS -->
+
+
+<br>
+  <div class=>
+    
+    
+      <div class="inner_container recommendations">
+       
+      recommendations
+        {% for video in recentvideos %}
+        <div class="container-3-box">
+         
+            <div class='container-2'>
+              <p><a href = "{% url 'detail' video.id %}"><img src='{{video.thumbnail.url}}' height=400 width=400 class='border recommend'  /></a> </p>
+              <div class="center">
+                <h2> {{video.title}}
+
+                </h2>
+                <p>
+                  <span><i>{{video.user.username}}</i></span>
+                  <span style='color:teal;'><i></br>{{video.views}} views</i></span>
+                </p>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+        {% endfor %}
+
+
+
+
+
+
+
+
+      </div>
+    </div>
+
+  </div>
+</div>
+</center>
+<br>
+      <!-- COMMENTS -->
+
+
+        <label><b>Add Your Comment!</b></label>
+        <form method="POST" action="{% url 'detail' video.id %}" enctype="multipart/form-data">
+          <textarea class="textarea" rows="4" name='textareaComment'></textarea>
+
+          {% csrf_token %}
+          <button class="ui labeled button right" tabindex="0" name='submitComment'>
+            <div class="button is-primary">
+              Submit
+            </div>
+          </button>
+        </form>
+
+
+      </div>
+
+
+
+
+        {% for query in queryset %}
+        {# Each "query" is a Queryset model object. #}
+
+      </br></br></br>
+      <div class="box">
+     
+        <p> {{ query.comment }}</p>
+
+      </div>
+
+        </form> 
+        <br>
+      
+
+{% endfor %}
+
+
+
+
+
+</div>
+<div class="container-2-box">
+
+
+</div>
+</div>
+
+</div>
+
+<div class="pagination" style='margin-top:50px; margin-left:100px;'>
+
+  <span class="step-links">
+    {% if queryset.has_previous %}
+
+    <a href="?page=1">
+
+      <i class="building outline
+                 icon"></i> First
+
+    </a>
+    <a href="?page={{ queryset.previous_page_number }}">
+
+      <i class="reply
+             icon"></i> Previous
+    </a>
+    {% endif %}
+
+    <span class="current">
+      Page {{ queryset.number }} of {{ queryset.paginator.num_pages }}.
+    </span>
+
+    {% if queryset.has_next %}
+    <a href="?page={{ queryset.next_page_number }}">
+
+      <i class="arrow right icon"></i> Next
+
+
+    </a>
+    <a href="?page={{ queryset.paginator.num_pages }}">
+
+      <i class="share 
+             icon"></i> Last
+
+    </a>
+    {% endif %}
+  </span>
+</div>
+
+
+
+
+
+
+</body>
+
+</html>
+
+
+
+{% endblock body %}

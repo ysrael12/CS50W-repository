@@ -1,0 +1,56 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+        {% if message %}
+            <div class="alert alert-danger">{{ message }}</div>
+        {% endif %}
+
+        <!-- Jumbotron -->
+        <div class="jumbotron text-center lighten-4">
+
+            <!-- Title -->
+            <br><h1><strong>CREATE LISTING</strong></h1> <br> <br>
+            <br>
+            <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn2.img.sputniknews.com%2Fimages%2F104815%2F96%2F1048159648.jpg&f=1&nofb=1" alt="indeximage" style="height: 350px;" class="embed-responsive">
+            <br> 
+            <!-- <hr class="my-4 pb-2"> -->
+    
+            <!-- Grid row -->
+            <div class="container">
+    
+                <form action="{% url 'createlisting' %}" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <input class="form-control" autofocus type="text" name="title" placeholder="Title">
+                    </div>
+                    <div class="form-group">
+                        <textarea class="form-control" name="description" rows="4" placeholder="Description"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <select class="form-control" name="category" placeholder="Category" required>
+                            <option value="">Choose a Category</option>
+                            <option value="fashion">Fashion</option>
+                            <option value="cars">Cars</option>
+                            <option value="Games">Games</option>
+                            <option value="tools">Tools</option>
+                            <option value="toys">Toys</option>
+                            <option value="electronics">Electronics</option>
+                            <option value="accessories">Accessories</option>
+                            <option value="books">Books</option>
+                            <option value="Antiques">Antiques</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" type="text" name="starting_bid" placeholder="Starting Bid">
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" type="text" name="image_link" placeholder="Image Link (Optional)">
+                    </div>
+                    <input class="btn btn-primary" type="submit" value="Create">
+                </form>
+            </div>
+        </div>
+        <!-- End Jumbotron -->
+
+{% endblock %}

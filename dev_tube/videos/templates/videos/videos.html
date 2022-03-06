@@ -1,0 +1,129 @@
+{% extends 'website/base.html' %}
+{% block title %}dev tube{% endblock title %}
+{% load static %}
+
+
+{% load customtags %}
+{% block body %}
+{% if user.is_authenticated %}
+<center>
+ <div class='level-item has-text-centered' id = 'search'>
+    <form method = 'GET' action = '' >
+         <div class= "is-three-fifths">
+           <input  class="input is-primary"  type="text" name='query' placeholder="Search" value = '{{ request.GET.query  }}'/>
+           <input type = 'submit' class="button is-success" value = 'Find Videos'  ></input>
+         </div>
+
+       </form>
+      </center>
+<br>
+   
+
+<div class='level-item has-text-centered'>
+  <div class="container-3">
+
+
+{% for query in queryset %}
+<div class="box">
+  <div class="columns is-mobile">
+
+    <div class="box">
+
+      <a href = '{% url 'detail' query.id %}'><img src='{{query.thumbnail.url}}' width="420" height="680"
+       class = 'border' > </img></a>
+
+    </div>
+    <br>
+    <div >
+      <a style = 'color:black;'href = '{% url 'detail' query.id %}'><h1>{{query.title}}</h1></a>
+      <br>
+      <p><i>
+          {{query.description}}
+        </i></p>
+
+      <hr />
+      <p>user :  {{query.user.username}}</p>
+
+      <p style='color:teal;'> <b>{{query.views}} Views</b></p>
+
+      <label><i><b>Likes</b></i></label>
+      <div class="ui teal progress" data-value="15" data-total="20">
+        <div class="bar" style="width:{{ likes_percent|get_item:query.id }}%"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% endfor %}
+</div>
+</div>
+
+{% else %} 
+<center>
+<h1> login to access </h1>
+ <a href= '{% url 'account_login' %}' class="button is-primary">login</a> 
+  
+  <a href= '{% url 'account_signup' %}' class="button is-link">register</a>
+  </center>
+{% endif %}
+
+
+
+<!-- pagination-->
+<div class="pagination center">
+
+  <span class="step-links">
+    {% if queryset.has_previous %}
+
+    <a href="?page=1">
+      <div class="ui labeled button" tabindex="0">
+        <div class="ui purple button">
+          <i class="step forward
+                 icon"></i> First
+        </div>
+      </div>
+    </a>
+    <a href="?page={{ queryset.previous_page_number }}">
+      <div class="ui labeled button" tabindex="0">
+        <div class="ui teal button">
+          <i class="step forward
+             icon"></i> Previous
+        </div>
+      </div>
+    </a>
+    {% endif %}
+
+    <span class="current">
+      Page {{ queryset.number }} of {{ queryset.paginator.num_pages }}.
+    </span>
+    </br>
+    {% if queryset.has_next %}
+    <a href="?page={{ queryset.next_page_number }}">
+      <div class="ui labeled button" tabindex="0">
+        <div class="ui purple button">
+          <i class="play icon"></i> Next
+        </div>
+      </div>
+
+    </a>
+    <a href="?page={{ queryset.paginator.num_pages }}">
+      <div class="ui labeled button" tabindex="0">
+        <div class="ui teal button">
+          <i class="step forward
+             icon"></i> Last
+        </div>
+      </div>
+    </a>
+    {% endif %}
+  </span>
+</div>
+<footer>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
+<center>
+  {% if  user.is_authenticated  %}
+<button class="button is-link"   onclick="window.location='{% url 'upload' %}';" >Upload your video here!!</button>
+{% endif %}
+</footer>
+</center>
+{% endblock body %}
