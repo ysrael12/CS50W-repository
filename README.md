@@ -1,4 +1,4 @@
-# django/python portifolio 
+# Cs50 course completion
 
 I made this 6 projects in the havard course cs50 , web programing with python and js.
 i submite and i passed in the course , and i get the havard certificate
